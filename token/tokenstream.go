@@ -1,4 +1,4 @@
-package adoc
+package token
 
 type TokenStream struct {
 	ts  []Token
@@ -20,6 +20,7 @@ func (s *TokenStream) run() {
 	for _, tok := range s.ts {
 		s.out <- tok
 	}
+	s.out <- TOKEN_EOS
 	close(s.out)
 }
 

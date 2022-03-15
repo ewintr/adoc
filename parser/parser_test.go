@@ -1,10 +1,11 @@
-package adoc_test
+package parser_test
 
 import (
 	"strings"
 	"testing"
 
 	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
 )
 
@@ -20,7 +21,7 @@ func TestParser(t *testing.T) {
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			par := adoc.NewParser(strings.NewReader(tc.input))
+			par := parser.New(strings.NewReader(tc.input))
 			test.Equals(t, tc.exp, par.Parse())
 		})
 	}

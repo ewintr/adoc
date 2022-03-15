@@ -1,32 +1,32 @@
-package adoc_test
+package token_test
 
 import (
 	"strings"
 	"testing"
 	"time"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/token"
 	"ewintr.nl/go-kit/test"
 )
 
 func TestLexer(t *testing.T) {
-	word := adoc.TYPE_WORD
-	ws := adoc.TYPE_WHITESPACE
-	nl := adoc.TYPE_NEWLINE
-	eq := adoc.TYPE_EQUALSIGN
-	bt := adoc.TYPE_BACKTICK
-	as := adoc.TYPE_ASTERISK
-	un := adoc.TYPE_UNDERSCORE
+	word := token.TYPE_WORD
+	ws := token.TYPE_WHITESPACE
+	nl := token.TYPE_NEWLINE
+	eq := token.TYPE_EQUALSIGN
+	bt := token.TYPE_BACKTICK
+	as := token.TYPE_ASTERISK
+	un := token.TYPE_UNDERSCORE
 
 	for _, tc := range []struct {
 		name  string
 		input string
-		exp   []adoc.Token
+		exp   []token.Token
 	}{
 		{
 			name:  "word string",
 			input: "one two",
-			exp: []adoc.Token{
+			exp: []token.Token{
 				{Type: word, Literal: "one"},
 				{Type: ws, Literal: " "},
 				{Type: word, Literal: "two"},
@@ -35,7 +35,7 @@ func TestLexer(t *testing.T) {
 		{
 			name:  "punctuation",
 			input: `. ,`,
-			exp: []adoc.Token{
+			exp: []token.Token{
 				{Type: word, Literal: "."},
 				{Type: ws, Literal: " "},
 				{Type: word, Literal: ","},
@@ -44,24 +44,24 @@ func TestLexer(t *testing.T) {
 		{
 			name:  "whitespace",
 			input: " \t",
-			exp: []adoc.Token{
+			exp: []token.Token{
 				{Type: ws, Literal: " \t"},
 			},
 		},
 		{
 			name:  "tab",
 			input: "\t",
-			exp:   []adoc.Token{{Type: ws, Literal: "\t"}},
+			exp:   []token.Token{{Type: ws, Literal: "\t"}},
 		},
 		{
 			name:  "newlines",
 			input: "\n\n\n",
-			exp:   []adoc.Token{{Type: nl, Literal: "\n\n\n"}},
+			exp:   []token.Token{{Type: nl, Literal: "\n\n\n"}},
 		},
 		{
 			name:  "special chars",
 			input: "=*_",
-			exp: []adoc.Token{
+			exp: []token.Token{
 				{Type: eq, Literal: "="},
 				{Type: as, Literal: "*"},
 				{Type: un, Literal: "_"},
@@ -70,7 +70,7 @@ func TestLexer(t *testing.T) {
 		{
 			name:  "mixed",
 			input: "This is a line with mixed \t `stuff`, see\t==?",
-			exp: []adoc.Token{
+			exp: []token.Token{
 				{Type: word, Literal: "This"},
 				{Type: ws, Literal: " "},
 				{Type: word, Literal: "is"},
@@ -97,8 +97,8 @@ func TestLexer(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			input := strings.NewReader(tc.input)
-			lex := adoc.NewLexer(input)
-			act := []adoc.Token{}
+			lex := token.NewLexer(input)
+			act := []token.Token{}
 			stop := time.Now().Add(3 * time.Second)
 
 		T:
@@ -118,7 +118,7 @@ func TestLexer(t *testing.T) {
 			}
 
 			test.OK(t, lex.Error())
-			exp := append(tc.exp, adoc.TOKEN_EOF)
+			exp := append(tc.exp, token.TOKEN_EOF)
 			test.Equals(t, exp, act)
 		})
 	}

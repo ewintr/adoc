@@ -1,4 +1,4 @@
-package adoc
+package token
 
 import (
 	"bufio"

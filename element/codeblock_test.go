@@ -1,10 +1,12 @@
-package adoc_test
+package element_test
 
 import (
 	"strings"
 	"testing"
 
 	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/element"
+	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
 )
 
@@ -20,7 +22,7 @@ func TestCodeBlock(t *testing.T) {
 ----`,
 			exp: &adoc.ADoc{
 				Attributes: map[string]string{},
-				Content:    []adoc.Element{adoc.CodeBlock{}},
+				Content:    []element.Element{element.CodeBlock{}},
 			},
 		},
 		{
@@ -32,11 +34,11 @@ more
 ----`,
 			exp: &adoc.ADoc{
 				Attributes: map[string]string{},
-				Content: []adoc.Element{adoc.CodeBlock{
-					adoc.Word("code"),
-					adoc.WhiteSpace("\n\n"),
-					adoc.Word("more"),
-					adoc.WhiteSpace("\n"),
+				Content: []element.Element{element.CodeBlock{
+					element.Word("code"),
+					element.WhiteSpace("\n\n"),
+					element.Word("more"),
+					element.WhiteSpace("\n"),
 				}},
 			},
 		},
@@ -49,22 +51,22 @@ more
 `,
 			exp: &adoc.ADoc{
 				Attributes: map[string]string{},
-				Content: []adoc.Element{
-					adoc.Paragraph{
-						adoc.Word("----"),
-						adoc.WhiteSpace("\n"),
-						adoc.Word("code"),
-					},
-					adoc.Paragraph{
-						adoc.Word("more"),
-						adoc.WhiteSpace("\n"),
-					},
+				Content: []element.Element{
+					element.Paragraph{[]element.Element{
+						element.Word("----"),
+						element.WhiteSpace("\n"),
+						element.Word("code"),
+					}},
+					element.Paragraph{[]element.Element{
+						element.Word("more"),
+						element.WhiteSpace("\n"),
+					}},
 				},
 			},
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			par := adoc.NewParser(strings.NewReader(tc.input))
+			par := parser.New(strings.NewReader(tc.input))
 			test.Equals(t, tc.exp, par.Parse())
 		})
 	}

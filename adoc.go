@@ -2,6 +2,8 @@ package adoc
 
 import (
 	"time"
+
+	"ewintr.nl/adoc/element"
 )
 
 type ADoc struct {
@@ -10,12 +12,12 @@ type ADoc struct {
 	Author     string
 	Path       string
 	Date       time.Time
-	Content    []Element
+	Content    []element.Element
 }
 
 func NewADoc() *ADoc {
 	return &ADoc{
 		Attributes: map[string]string{},
-		Content:    []Element{},
+		Content:    []element.Element{},
 	}
 }

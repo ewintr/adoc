@@ -1,4 +1,4 @@
-package adoc
+package token
 
 const (
 	TYPE_EOF TokenType = iota

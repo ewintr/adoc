@@ -1,4 +1,4 @@
-package adoc_test
+package element_test
 
 import (
 	"strings"
@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/element"
+	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
 )
 
@@ -21,7 +23,7 @@ func TestHeader(t *testing.T) {
 			exp: &adoc.ADoc{
 				Title:      "Title",
 				Attributes: map[string]string{},
-				Content:    []adoc.Element{},
+				Content:    []element.Element{},
 			},
 		},
 		{
@@ -46,18 +48,18 @@ First paragraph`,
 					"key1": "value1",
 					"key2": "value2",
 				},
-				Content: []adoc.Element{
-					adoc.Paragraph([]adoc.Element{
-						adoc.Word("First"),
-						adoc.WhiteSpace(" "),
-						adoc.Word("paragraph"),
-					}),
+				Content: []element.Element{
+					element.Paragraph{[]element.Element{
+						element.Word("First"),
+						element.WhiteSpace(" "),
+						element.Word("paragraph"),
+					}},
 				},
 			},
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			par := adoc.NewParser(strings.NewReader(tc.input))
+			par := parser.New(strings.NewReader(tc.input))
 			test.Equals(t, tc.exp, par.Parse())
 		})
 	}

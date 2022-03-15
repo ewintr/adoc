@@ -1,10 +1,12 @@
-package adoc_test
+package element_test
 
 import (
 	"strings"
 	"testing"
 
 	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/element"
+	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
 )
 
@@ -12,41 +14,41 @@ func TestLink(t *testing.T) {
 	for _, tc := range []struct {
 		name  string
 		input string
-		exp   []adoc.Element
+		exp   []element.Element
 	}{
 		{
 			name:  "simple",
 			input: "a link[title] somewhere",
-			exp: []adoc.Element{
-				adoc.Paragraph([]adoc.Element{
-					adoc.Word("a"),
-					adoc.WhiteSpace(" "),
-					adoc.Link{
+			exp: []element.Element{
+				element.Paragraph{Elements: []element.Element{
+					element.Word("a"),
+					element.WhiteSpace(" "),
+					element.Link{
 						URL:   "link",
 						Title: "title",
 					},
-					adoc.WhiteSpace(" "),
-					adoc.Word("somewhere"),
-				}),
+					element.WhiteSpace(" "),
+					element.Word("somewhere"),
+				}},
 			},
 		},
 		{
 			name:  "with underscore",
 			input: "check https://example.com/some_url[some url]",
-			exp: []adoc.Element{
-				adoc.Paragraph([]adoc.Element{
-					adoc.Word("check"),
-					adoc.WhiteSpace(" "),
-					adoc.Link{
+			exp: []element.Element{
+				element.Paragraph{Elements: []element.Element{
+					element.Word("check"),
+					element.WhiteSpace(" "),
+					element.Link{
 						URL:   "https://example.com/some_url",
 						Title: "some url",
 					},
-				}),
+				}},
 			},
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			par := adoc.NewParser(strings.NewReader(tc.input))
+			par := parser.New(strings.NewReader(tc.input))
 			exp := &adoc.ADoc{
 				Attributes: map[string]string{},
 				Content:    tc.exp,
