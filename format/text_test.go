@@ -12,14 +12,15 @@ import (
 func TestText(t *testing.T) {
 	input := `= A Title
 
-Some Document
+Some document
 
-With some text`
+With some text.`
+
 	exp := `A Title
 
-Some Document
+Some document
 
-With some text
+With some text.
 
 `
 
