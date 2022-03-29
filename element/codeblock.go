@@ -30,16 +30,16 @@ func NewCodeBlockFromTokens(p ReadUnreader) (ParseResult, bool) {
 		return ParseResult{}, false
 	}
 	for {
-		ntoks, ok := p.Read(1)
+		ntoks, ok := p.Read(2)
 		if !ok {
 			p.Unread(len(toks))
 			return ParseResult{}, false
 		}
-		tok := ntoks[0]
-		if tok.Equal(delimiter) {
+		if ntoks[0].Equal(delimiter) && (ntoks[1].Type == token.TYPE_NEWLINE || ntoks[1].Equal(token.TOKEN_EOF)) {
 			break
 		}
-		toks = append(toks, tok)
+		p.Unread(1)
+		toks = append(toks, ntoks[0])
 	}
 
 	cb := CodeBlock{}

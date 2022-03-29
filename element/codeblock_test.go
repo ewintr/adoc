@@ -43,6 +43,20 @@ more
 			},
 		},
 		{
+			name: "with newline at end",
+			input: `----
+code
+----
+`,
+			exp: &adoc.ADoc{
+				Attributes: map[string]string{},
+				Content: []element.Element{element.CodeBlock{
+					element.Word("code"),
+					element.WhiteSpace("\n"),
+				}},
+			},
+		},
+		{
 			name: "missing end",
 			input: `----
 code
