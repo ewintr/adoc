@@ -15,7 +15,7 @@ type ADoc struct {
 	Content    []element.Element
 }
 
-func NewADoc() *ADoc {
+func New() *ADoc {
 	return &ADoc{
 		Attributes: map[string]string{},
 		Content:    []element.Element{},

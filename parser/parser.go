@@ -21,7 +21,7 @@ func New(reader io.Reader) *Parser {
 
 func NewParserFromChannel(toks chan token.Token) *Parser {
 	return &Parser{
-		doc: adoc.NewADoc(),
+		doc: adoc.New(),
 		tr:  token.NewTokenReader(toks),
 		els: []element.Element{},
 	}

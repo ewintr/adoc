@@ -17,7 +17,7 @@ func TestParser(t *testing.T) {
 	}{
 		{
 			name: "empty",
-			exp:  adoc.NewADoc(),
+			exp:  adoc.New(),
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {

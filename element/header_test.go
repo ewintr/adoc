@@ -29,7 +29,7 @@ func TestHeader(t *testing.T) {
 		{
 			name:  "empty title",
 			input: "= ",
-			exp:   adoc.NewADoc(),
+			exp:   adoc.New(),
 		},
 		{
 			name: "full header",
