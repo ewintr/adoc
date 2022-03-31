@@ -141,12 +141,12 @@ func TestHTMLFragment(t *testing.T) {
 				element.WhiteSpace(" "),
 				element.Word("text"),
 				element.WhiteSpace("\n"),
-				element.Word("with"),
+				element.Word("<p>with</p>"),
 				element.WhiteSpace("\t"),
 				element.Word("formatting"),
 			},
 			exp: `<pre><code>some text
-with	formatting</code></pre>`,
+&lt;p&gt;with&lt;/p&gt;	formatting</code></pre>`,
 		},
 		{
 			name:  "subtitle",

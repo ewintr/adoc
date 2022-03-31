@@ -47,7 +47,7 @@ func htmlElement(el element.Element) string {
 	case element.ListItem:
 		return fmt.Sprintf("<li>%s</li>\n", HTMLFragment(v...))
 	case element.CodeBlock:
-		return fmt.Sprintf("<pre><code>%s</code></pre>", v.Text())
+		return fmt.Sprintf("<pre><code>%s</code></pre>", html.EscapeString(v.Text()))
 	case element.Paragraph:
 		return fmt.Sprintf("<p>%s</p>\n", HTMLFragment(v.Elements...))
 	case element.Strong:
