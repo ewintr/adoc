@@ -1,6 +1,7 @@
-= AsciiDoc parser
+= README.adoc
+2022-04-06
 
-A limited parser for the https://asciidoc-py.github.io/index.html[Asciidoc] markup language.
+The beginnings of a parser for the https://asciidoc-py.github.io/index.html[Asciidoc] markup language.
 
 == Example
 
