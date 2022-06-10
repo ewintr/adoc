@@ -9,7 +9,7 @@ import (
 	"ewintr.nl/go-kit/slugify"
 )
 
-const pageTemplate = `<!DOCTYPE html>
+const htmlPageTemplate = `<!DOCTYPE html>
 <html>
 <head>
 <title>%s</title>
@@ -20,7 +20,7 @@ const pageTemplate = `<!DOCTYPE html>
 `
 
 func HTML(doc *adoc.ADoc) string {
-	return fmt.Sprintf(pageTemplate, html.EscapeString(doc.Title), HTMLFragment(doc.Content...))
+	return fmt.Sprintf(htmlPageTemplate, html.EscapeString(doc.Title), HTMLFragment(doc.Content...))
 }
 
 func HTMLFragment(els ...element.Element) string {
