@@ -10,7 +10,6 @@ type ADoc struct {
 	Title      string
 	Attributes map[string]string
 	Author     string
-	Path       string
 	Date       time.Time
 	Content    []element.Element
 }

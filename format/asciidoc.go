@@ -13,6 +13,12 @@ func AsciiDoc(doc *adoc.ADoc) string {
 
 func AsciiDocHeader(doc *adoc.ADoc) string {
 	header := fmt.Sprintf("= %s\n", doc.Title)
+	if doc.Author != "" {
+		header += fmt.Sprintf("%s\n", doc.Author)
+	}
+	if !doc.Date.IsZero() {
+		header += fmt.Sprintf("%s\n", doc.Date.Format("2006-01-02"))
+	}
 	for k, v := range doc.Attributes {
 		header += fmt.Sprintf(":%s: %s\n", k, v)
 	}

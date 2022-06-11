@@ -3,7 +3,9 @@ package format_test
 import (
 	"strings"
 	"testing"
+	"time"
 
+	"ewintr.nl/adoc"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/adoc/format"
 	"ewintr.nl/adoc/parser"
@@ -21,6 +23,26 @@ With some text.
 
 	doc := parser.New(strings.NewReader(input)).Parse()
 	test.Equals(t, input, format.AsciiDoc(doc))
+}
+
+func TestAsciiDocHeader(t *testing.T) {
+	input := &adoc.ADoc{
+		Title:  "title",
+		Author: "author",
+		Date:   time.Date(2022, time.Month(6), 11, 12, 0, 0, 0, time.UTC),
+		Attributes: map[string]string{
+			"key1": "value 1",
+			"key2": "value 2",
+		},
+	}
+	exp := `= title
+author
+2022-06-11
+:key1: value 1
+:key2: value 2
+`
+
+	test.Equals(t, exp, format.AsciiDocHeader(input))
 }
 
 func TestAsciiDocFragment(t *testing.T) {
