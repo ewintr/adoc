@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
@@ -14,11 +14,11 @@ func TestParser(t *testing.T) {
 	for _, tc := range []struct {
 		name  string
 		input string
-		exp   *adoc.ADoc
+		exp   *document.Document
 	}{
 		{
 			name: "empty",
-			exp:  adoc.New(),
+			exp:  document.New(),
 		},
 		{
 			name: "codeblock paragraph edge",
@@ -29,7 +29,7 @@ a code block
 ----
 
 And then some text`,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Title:      "some title",
 				Attributes: map[string]string{},
 				Content: []element.Element{

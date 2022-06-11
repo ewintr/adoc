@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
@@ -49,7 +49,7 @@ func TestLink(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			par := parser.New(strings.NewReader(tc.input))
-			exp := &adoc.ADoc{
+			exp := &document.Document{
 				Attributes: map[string]string{},
 				Content:    tc.exp,
 			}

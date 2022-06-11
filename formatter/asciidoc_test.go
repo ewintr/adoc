@@ -1,48 +1,46 @@
-package format_test
+package formatter_test
 
 import (
-	"strings"
 	"testing"
 	"time"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
-	"ewintr.nl/adoc/format"
-	"ewintr.nl/adoc/parser"
+	"ewintr.nl/adoc/formatter"
 	"ewintr.nl/go-kit/test"
 )
 
 func TestAsciiDoc(t *testing.T) {
-	input := `= A Title
-
-Some document
-
-With some text.
-
-`
-
-	doc := parser.New(strings.NewReader(input)).Parse()
-	test.Equals(t, input, format.AsciiDoc(doc))
-}
-
-func TestAsciiDocHeader(t *testing.T) {
-	input := &adoc.ADoc{
-		Title:  "title",
-		Author: "author",
-		Date:   time.Date(2022, time.Month(6), 11, 12, 0, 0, 0, time.UTC),
+	input := &document.Document{
+		Title:  "A Title",
+		Author: "Author",
+		Date:   time.Date(2022, time.Month(6), 11, 0, 0, 0, 0, time.UTC),
 		Attributes: map[string]string{
 			"key1": "value 1",
 			"key2": "value 2",
 		},
+		Content: []element.Element{
+			element.Paragraph{
+				Elements: []element.Element{
+					element.Word("some"),
+					element.WhiteSpace(" "),
+					element.Word("text"),
+				},
+			},
+		},
 	}
-	exp := `= title
-author
+
+	exp := `= A Title
+Author
 2022-06-11
 :key1: value 1
 :key2: value 2
+
+some text
+
 `
 
-	test.Equals(t, exp, format.AsciiDocHeader(input))
+	test.Equals(t, exp, formatter.NewAsciiDoc().Format(input))
 }
 
 func TestAsciiDocFragment(t *testing.T) {
@@ -172,7 +170,7 @@ some text
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			test.Equals(t, tc.exp, format.AsciiDocFragment(tc.input))
+			test.Equals(t, tc.exp, formatter.NewAsciiDoc().FormatFragments(tc.input))
 		})
 	}
 }

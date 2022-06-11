@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
@@ -14,13 +14,13 @@ func TestCodeBlock(t *testing.T) {
 	for _, tc := range []struct {
 		name  string
 		input string
-		exp   *adoc.ADoc
+		exp   *document.Document
 	}{
 		{
 			name: "empty",
 			input: `----
 ----`,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Attributes: map[string]string{},
 				Content:    []element.Element{element.CodeBlock{}},
 			},
@@ -32,7 +32,7 @@ code
 
 more
 ----`,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Attributes: map[string]string{},
 				Content: []element.Element{element.CodeBlock{
 					element.Word("code"),
@@ -48,7 +48,7 @@ more
 code
 ----
 `,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Attributes: map[string]string{},
 				Content: []element.Element{element.CodeBlock{
 					element.Word("code"),
@@ -63,7 +63,7 @@ code
 
 more
 `,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Attributes: map[string]string{},
 				Content: []element.Element{
 					element.Paragraph{[]element.Element{

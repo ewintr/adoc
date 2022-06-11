@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
@@ -15,12 +15,12 @@ func TestHeader(t *testing.T) {
 	for _, tc := range []struct {
 		name  string
 		input string
-		exp   *adoc.ADoc
+		exp   *document.Document
 	}{
 		{
 			name:  "just title",
 			input: "= Title",
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Title:      "Title",
 				Attributes: map[string]string{},
 				Content:    []element.Element{},
@@ -29,7 +29,7 @@ func TestHeader(t *testing.T) {
 		{
 			name:  "empty title",
 			input: "= ",
-			exp:   adoc.New(),
+			exp:   document.New(),
 		},
 		{
 			name: "full header",
@@ -40,7 +40,7 @@ Author Name
 :key2: value2
 
 First paragraph`,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Title:  "Title with words",
 				Date:   time.Date(2022, time.Month(3), 4, 0, 0, 0, 0, time.UTC),
 				Author: "Author Name",

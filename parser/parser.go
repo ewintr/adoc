@@ -3,13 +3,13 @@ package parser
 import (
 	"io"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/adoc/token"
 )
 
 type Parser struct {
-	doc *adoc.ADoc
+	doc *document.Document
 	tr  *token.TokenReader
 	els []element.Element
 }
@@ -21,13 +21,13 @@ func New(reader io.Reader) *Parser {
 
 func NewParserFromChannel(toks chan token.Token) *Parser {
 	return &Parser{
-		doc: adoc.New(),
+		doc: document.New(),
 		tr:  token.NewTokenReader(toks),
 		els: []element.Element{},
 	}
 }
 
-func (p *Parser) Parse() *adoc.ADoc {
+func (p *Parser) Parse() *document.Document {
 	result, ok := element.NewHeaderFromTokens(p.tr)
 	if ok {
 		if h, ok := result.Element.(element.Header); ok {

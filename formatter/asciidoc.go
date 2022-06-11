@@ -1,17 +1,23 @@
-package format
+package formatter
 
 import (
 	"fmt"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 )
 
-func AsciiDoc(doc *adoc.ADoc) string {
-	return fmt.Sprintf("%s\n%s", AsciiDocHeader(doc), AsciiDocFragment(doc.Content...))
+type AsciiDoc struct{}
+
+func NewAsciiDoc() *AsciiDoc {
+	return &AsciiDoc{}
 }
 
-func AsciiDocHeader(doc *adoc.ADoc) string {
+func (ad *AsciiDoc) Format(doc *document.Document) string {
+	return fmt.Sprintf("%s\n%s", asciiDocHeader(doc), ad.FormatFragments(doc.Content...))
+}
+
+func asciiDocHeader(doc *document.Document) string {
 	header := fmt.Sprintf("= %s\n", doc.Title)
 	if doc.Author != "" {
 		header += fmt.Sprintf("%s\n", doc.Author)
@@ -26,16 +32,16 @@ func AsciiDocHeader(doc *adoc.ADoc) string {
 	return header
 }
 
-func AsciiDocFragment(els ...element.Element) string {
+func (ad *AsciiDoc) FormatFragments(els ...element.Element) string {
 	var asciiDoc string
 	for _, el := range els {
-		asciiDoc += asciiDocElement(el)
+		asciiDoc += ad.asciiDocElement(el)
 	}
 
 	return asciiDoc
 }
 
-func asciiDocElement(el element.Element) string {
+func (ad *AsciiDoc) asciiDocElement(el element.Element) string {
 	switch v := el.(type) {
 	case element.SubTitle:
 		return fmt.Sprintf("== %s\n\n", v.Text())
@@ -46,19 +52,19 @@ func asciiDocElement(el element.Element) string {
 		for _, i := range v {
 			items = append(items, i)
 		}
-		return fmt.Sprintf("%s\n", AsciiDocFragment(items...))
+		return fmt.Sprintf("%s\n", ad.FormatFragments(items...))
 	case element.ListItem:
-		return fmt.Sprintf("* %s\n", AsciiDocFragment(v...))
+		return fmt.Sprintf("* %s\n", ad.FormatFragments(v...))
 	case element.CodeBlock:
 		return fmt.Sprintf("----\n%s\n----\n\n", v.Text())
 	case element.Paragraph:
-		return fmt.Sprintf("%s\n\n", AsciiDocFragment(v.Elements...))
+		return fmt.Sprintf("%s\n\n", ad.FormatFragments(v.Elements...))
 	case element.Strong:
-		return fmt.Sprintf("*%s*", AsciiDocFragment(v...))
+		return fmt.Sprintf("*%s*", ad.FormatFragments(v...))
 	case element.Emphasis:
-		return fmt.Sprintf("_%s_", AsciiDocFragment(v...))
+		return fmt.Sprintf("_%s_", ad.FormatFragments(v...))
 	case element.Code:
-		return fmt.Sprintf("`%s`", AsciiDocFragment(v...))
+		return fmt.Sprintf("`%s`", ad.FormatFragments(v...))
 	case element.Link:
 		return fmt.Sprintf("%s[%s]", v.URL, v.Title)
 	case element.Word:

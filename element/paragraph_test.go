@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/adoc/parser"
 	"ewintr.nl/go-kit/test"
@@ -14,12 +14,12 @@ func TestParagraph(t *testing.T) {
 	for _, tc := range []struct {
 		name  string
 		input string
-		exp   *adoc.ADoc
+		exp   *document.Document
 	}{
 		{
 			name:  "single paragraph",
 			input: "some text",
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Attributes: map[string]string{},
 				Content: []element.Element{
 					element.Paragraph{Elements: []element.Element{
@@ -36,7 +36,7 @@ func TestParagraph(t *testing.T) {
 paragraph one
 
 paragraph two`,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Title:      "Title",
 				Attributes: map[string]string{},
 				Content: []element.Element{
@@ -61,7 +61,7 @@ two
 
 three
 `,
-			exp: &adoc.ADoc{
+			exp: &document.Document{
 				Attributes: map[string]string{},
 				Content: []element.Element{
 					element.Paragraph{Elements: []element.Element{element.Word("one")}},

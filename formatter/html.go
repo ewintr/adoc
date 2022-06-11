@@ -1,10 +1,10 @@
-package format
+package formatter
 
 import (
 	"fmt"
 	"html"
 
-	"ewintr.nl/adoc"
+	"ewintr.nl/adoc/document"
 	"ewintr.nl/adoc/element"
 	"ewintr.nl/go-kit/slugify"
 )
@@ -19,20 +19,26 @@ const htmlPageTemplate = `<!DOCTYPE html>
 </html>
 `
 
-func HTML(doc *adoc.ADoc) string {
-	return fmt.Sprintf(htmlPageTemplate, html.EscapeString(doc.Title), HTMLFragment(doc.Content...))
+type HTML struct{}
+
+func NewHTML() *HTML {
+	return &HTML{}
 }
 
-func HTMLFragment(els ...element.Element) string {
+func (h *HTML) Format(doc *document.Document) string {
+	return fmt.Sprintf(htmlPageTemplate, html.EscapeString(doc.Title), h.FormatFragments(doc.Content...))
+}
+
+func (h *HTML) FormatFragments(els ...element.Element) string {
 	var html string
 	for _, el := range els {
-		html += htmlElement(el)
+		html += h.htmlElement(el)
 	}
 
 	return html
 }
 
-func htmlElement(el element.Element) string {
+func (h *HTML) htmlElement(el element.Element) string {
 	switch v := el.(type) {
 	case element.SubTitle:
 		return fmt.Sprintf("<h2 id=%q>%s</h2>\n", slugify.Slugify(v.Text()), html.EscapeString(v.Text()))
@@ -43,19 +49,19 @@ func htmlElement(el element.Element) string {
 		for _, i := range v {
 			items = append(items, i)
 		}
-		return fmt.Sprintf("<ul>\n%s</ul>\n", HTMLFragment(items...))
+		return fmt.Sprintf("<ul>\n%s</ul>\n", h.FormatFragments(items...))
 	case element.ListItem:
-		return fmt.Sprintf("<li>%s</li>\n", HTMLFragment(v...))
+		return fmt.Sprintf("<li>%s</li>\n", h.FormatFragments(v...))
 	case element.CodeBlock:
 		return fmt.Sprintf("<pre><code>%s</code></pre>", html.EscapeString(v.Text()))
 	case element.Paragraph:
-		return fmt.Sprintf("<p>%s</p>\n", HTMLFragment(v.Elements...))
+		return fmt.Sprintf("<p>%s</p>\n", h.FormatFragments(v.Elements...))
 	case element.Strong:
-		return fmt.Sprintf("<strong>%s</strong>", HTMLFragment(v...))
+		return fmt.Sprintf("<strong>%s</strong>", h.FormatFragments(v...))
 	case element.Emphasis:
-		return fmt.Sprintf("<em>%s</em>", HTMLFragment(v...))
+		return fmt.Sprintf("<em>%s</em>", h.FormatFragments(v...))
 	case element.Code:
-		return fmt.Sprintf("<code>%s</code>", HTMLFragment(v...))
+		return fmt.Sprintf("<code>%s</code>", h.FormatFragments(v...))
 	case element.Link:
 		return fmt.Sprintf("<a href=%q>%s</a>", v.URL, html.EscapeString(v.Title))
 	case element.Word:

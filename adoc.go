@@ -1,22 +1,29 @@
 package adoc
 
 import (
-	"time"
+	"io"
 
-	"ewintr.nl/adoc/element"
+	"ewintr.nl/adoc/document"
+	"ewintr.nl/adoc/formatter"
+	"ewintr.nl/adoc/parser"
 )
 
-type ADoc struct {
-	Title      string
-	Attributes map[string]string
-	Author     string
-	Date       time.Time
-	Content    []element.Element
+func NewDocument() *document.Document {
+	return document.New()
 }
 
-func New() *ADoc {
-	return &ADoc{
-		Attributes: map[string]string{},
-		Content:    []element.Element{},
-	}
+func NewParser(reader io.Reader) *parser.Parser {
+	return parser.New(reader)
+}
+
+func NewTextFormatter() *formatter.Text {
+	return formatter.NewText()
+}
+
+func NewAsciiDocFormatter() *formatter.AsciiDoc {
+	return formatter.NewAsciiDoc()
+}
+
+func NewHTMLFormatter() *formatter.HTML {
+	return formatter.NewHTML()
 }
