@@ -5,6 +5,8 @@ The beginnings of a parser for the https://asciidoc-py.github.io/index.html[Asci
 
 == Example
 
+https://go.dev/play/p/hF2wn_GdkBK[Run the snippet below on the Go Playground]
+
 ----
 package main
 
@@ -12,8 +14,7 @@ import (
   "fmt"
   "strings"
 
-  "ewintr.nl/adoc/format"
-  "ewintr.nl/adoc/parser"
+  "ewintr.nl/adoc"
 )
 
 func main() {
@@ -27,10 +28,10 @@ And this is the first paragraph. With some text. Lists are supported too:
 
 And we also have things like *bold* and _italic_.`
 
-  par := parser.New(strings.NewReader(sourceDoc))
+  par := adoc.NewParser(strings.NewReader(sourceDoc))
   doc := par.Parse()
 
-  htmlDoc := format.HTML(doc)
+  htmlDoc := adoc.NewHTMLFormatter().Format(doc)
   fmt.Println(htmlDoc)
 
   // output:
