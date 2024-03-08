@@ -3,7 +3,7 @@ package document
 import (
 	"time"
 
-	"ewintr.nl/adoc/element"
+	"code.ewintr.nl/adoc/element"
 )
 
 type Document struct {

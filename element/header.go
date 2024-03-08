@@ -3,7 +3,7 @@ package element
 import (
 	"time"
 
-	"ewintr.nl/adoc/token"
+	"code.ewintr.nl/adoc/token"
 )
 
 type Header struct {

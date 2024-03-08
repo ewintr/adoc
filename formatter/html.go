@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"html"
 
-	"ewintr.nl/adoc/document"
-	"ewintr.nl/adoc/element"
-	"ewintr.nl/go-kit/slugify"
+	"code.ewintr.nl/adoc/document"
+	"code.ewintr.nl/adoc/element"
+	"code.ewintr.nl/go-kit/slugify"
 )
 
 const htmlPageTemplate = `<!DOCTYPE html>

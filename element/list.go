@@ -1,7 +1,7 @@
 package element
 
 import (
-	"ewintr.nl/adoc/token"
+	"code.ewintr.nl/adoc/token"
 )
 
 type List []ListItem

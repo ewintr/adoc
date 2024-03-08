@@ -1,6 +1,6 @@
 package element
 
-import "ewintr.nl/adoc/token"
+import "code.ewintr.nl/adoc/token"
 
 type Element interface {
 	Text() string

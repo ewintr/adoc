@@ -1,8 +1,8 @@
 package formatter
 
 import (
-	"ewintr.nl/adoc/document"
-	"ewintr.nl/adoc/element"
+	"code.ewintr.nl/adoc/document"
+	"code.ewintr.nl/adoc/element"
 )
 
 type Formatter interface {

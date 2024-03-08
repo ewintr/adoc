@@ -3,9 +3,9 @@ package adoc
 import (
 	"io"
 
-	"ewintr.nl/adoc/document"
-	"ewintr.nl/adoc/formatter"
-	"ewintr.nl/adoc/parser"
+	"code.ewintr.nl/adoc/document"
+	"code.ewintr.nl/adoc/formatter"
+	"code.ewintr.nl/adoc/parser"
 )
 
 func NewDocument() *document.Document {

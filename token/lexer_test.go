@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"ewintr.nl/adoc/token"
-	"ewintr.nl/go-kit/test"
+	"code.ewintr.nl/adoc/token"
+	"code.ewintr.nl/go-kit/test"
 )
 
 func TestLexer(t *testing.T) {

@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"ewintr.nl/adoc/document"
-	"ewintr.nl/adoc/element"
-	"ewintr.nl/adoc/parser"
-	"ewintr.nl/go-kit/test"
+	"code.ewintr.nl/adoc/document"
+	"code.ewintr.nl/adoc/element"
+	"code.ewintr.nl/adoc/parser"
+	"code.ewintr.nl/go-kit/test"
 )
 
 func TestHeader(t *testing.T) {

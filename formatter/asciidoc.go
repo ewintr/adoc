@@ -3,8 +3,8 @@ package formatter
 import (
 	"fmt"
 
-	"ewintr.nl/adoc/document"
-	"ewintr.nl/adoc/element"
+	"code.ewintr.nl/adoc/document"
+	"code.ewintr.nl/adoc/element"
 )
 
 type AsciiDoc struct{}

@@ -14,7 +14,7 @@ import (
   "fmt"
   "strings"
 
-  "ewintr.nl/adoc"
+  "code.ewintr.nl/adoc"
 )
 
 func main() {

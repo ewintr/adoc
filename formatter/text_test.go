@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
-	"ewintr.nl/adoc/formatter"
-	"ewintr.nl/adoc/parser"
-	"ewintr.nl/go-kit/test"
+	"code.ewintr.nl/adoc/formatter"
+	"code.ewintr.nl/adoc/parser"
+	"code.ewintr.nl/go-kit/test"
 )
 
 func TestText(t *testing.T) {
